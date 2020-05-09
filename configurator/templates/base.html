@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script>
+    var themeHasJQuery = !!window.jQuery;
+</script><script type="text/javascript" src="{{url_for('static', filename='js/jquery.js')}}"></script>
+<script>
+    window._$ = jQuery.noConflict(themeHasJQuery);
+</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}" media="screen" />
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<!--[if lte IE 9]>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/layout.ie.css') }}">
+<script src="{{ url_for('static', filename='js/layout.ie.js') }}"></script>
+<![endif]-->
+<link class="" href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,regular,italic,600,600italic,700,700italic,800,800italic&subset=latin' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="{{ url_for('static', filename='js/layout.core.js') }}"></script>
+<script src="{{ url_for('static', filename='js/CloudZoom.js') }}"></script>
+    	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <title>{{title}}</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-light bg-light">
+
+    </nav>
+</header>
+<!-- Begin page content -->
+<main role="main" class="container">
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

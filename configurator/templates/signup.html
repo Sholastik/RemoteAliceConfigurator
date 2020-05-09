@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Регистрация</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    {% if message %}
+    <h2 class="alert alert-danger">{{ message }}</h2>
+    {% endif %}
+    <p>
+        {{ form.skill_name.label }}<br>
+        {{ form.skill_name(class="form-control", type="login") }}<br>
+        {% for error in form.skill_name.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password(class="form-control", type="password") }}<br>
+        {% for error in form.password.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.confirm_password.label }}<br>
+        {{ form.confirm_password(class="form-control", type="password") }}<br>
+        {% for error in form.confirm_password.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+</form>
+{% endblock %}

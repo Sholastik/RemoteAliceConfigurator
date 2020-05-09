@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Авторизация</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        {% if message %}
+            <h2 class="alert alert-danger">{{ message }}</h2>
+        {% endif %}
+        <p>
+            {{ form.skill_name.label }}<br>
+            {{ form.skill_name(class="form-control", type="login") }}<br>
+            {% for error in form.skill_name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(class="form-control", type="password") }}<br>
+            {% for error in form.password.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+            <p style="display:inline-block;">{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+            <a style="display:inline-block;" href="/signup">
+                <div class="btn btn-primary">Зарегистрироваться</div>
+            </a>
+    </form>
+{% endblock %}
