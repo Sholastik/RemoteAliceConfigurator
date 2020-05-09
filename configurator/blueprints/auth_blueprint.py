@@ -1,6 +1,6 @@
 import flask
 from flask import redirect, render_template
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 
 from configurator.data import db_session
 from configurator.data.skill import Skill
@@ -8,7 +8,6 @@ from configurator.forms.login import LoginForm
 from configurator.forms.signup import SignUpForm
 from configurator.util import auth
 from configurator.util.auth import check_password
-from configurator.util.random import random_string
 
 auth_blueprint = flask.Blueprint('auth', __name__, template_folder='templates')
 
@@ -17,7 +16,6 @@ auth_blueprint = flask.Blueprint('auth', __name__, template_folder='templates')
 def login():
     # Проверяем, зашел ли пользователь в аккаунт
     if current_user.is_authenticated:
-        print(current_user.port)
         return redirect('/console')
 
     form = LoginForm()
@@ -64,8 +62,8 @@ def signup():
         # Создаем навык
         salt, password = auth.prepare_password(form.password.data)
         skill = Skill(skill_name=form.skill_name.data, hashed_password=password,
-                      salt=salt, port=5000 + session.query(Skill).count(),
-                      database_name=random_string(40))
+                      salt=salt, port=5000 + session.query(Skill).count()
+                      )
 
         session.add(skill)
         session.commit()
@@ -75,3 +73,9 @@ def signup():
         return redirect('/login')
 
     return render_template('signup.html', title='Регистрация', form=form)
+
+
+@auth_blueprint.route('/sign_out')
+def sign_out():
+    logout_user()
+    return redirect('/')

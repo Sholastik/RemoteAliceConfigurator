@@ -1,0 +1,38 @@
+{% extends "console_base.html" %}
+
+{% block content %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    {% if message %}
+    <h2 class="alert alert-danger">{{ message }}</h2>
+    {% endif %}
+    <p>
+        {{ form.action_name.label }}<br>
+        {{ form.action_name(class="form-control") }}<br>
+        {% for error in form.action_name.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.trigger.label }}<br>
+        {{ form.trigger(class="form-control") }}<br>
+        {% for error in form.trigger.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.answer.label }}<br>
+        {{ form.answer(class="form-control") }}<br>
+        {% for error in form.answer.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+</form>
+{% endblock %}
