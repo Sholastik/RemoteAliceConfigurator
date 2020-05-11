@@ -1,7 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 import sqlalchemy
 
-from configurator.data.db_session import SqlAlchemyBase
+from runner.data.db_session import SqlAlchemyBase
 
 
 class Command(SqlAlchemyBase, SerializerMixin):

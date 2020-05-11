@@ -1,8 +1,9 @@
+import pathlib
 import subprocess
 import sqlalchemy
 from sqlalchemy_serializer import SerializerMixin
 
-from configurator.data.db_session import SqlAlchemyBase
+from runner.data.db_session import SqlAlchemyBase
 
 
 class Machine(SqlAlchemyBase, SerializerMixin):
@@ -13,13 +14,14 @@ class Machine(SqlAlchemyBase, SerializerMixin):
     def start(self):
         if self.process is not None:
             raise RuntimeError("Machine is already running!")
-        self.process = subprocess.Popen(["python3", "../executor.py", f"{self.port}"],
+        self.process = subprocess.Popen(["python3", f"{pathlib.Path().absolute()}/executor.py", f"{self.port}"],
                                         stdout=subprocess.PIPE,
                                         stderr=subprocess.STDOUT)
 
     def stop(self):
-        self.process.terminate()
-        self.process = None
+        if self.process is not None:
+            self.process.terminate()
+            self.process = None
 
     def is_running(self):
-        return self.process.poll() is None
+        return self.process is not None and self.process.poll() is None

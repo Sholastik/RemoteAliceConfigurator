@@ -1,6 +1,7 @@
 import flask
 from flask import redirect, render_template
 from flask_login import current_user, login_user, logout_user
+from requests import post
 
 from configurator.data import db_session
 from configurator.data.skill import Skill
@@ -64,6 +65,19 @@ def signup():
         skill = Skill(skill_name=form.skill_name.data, hashed_password=password,
                       salt=salt, port=5000 + session.query(Skill).count()
                       )
+
+        # Создаем машину для навыка
+        post("http://127.0.0.1:8081/machines", json={
+            "port": skill.port
+        })
+
+        # Добавляем приветствие
+        post("http://127.0.0.1:8081/commands", json={
+            "action_name": "Приветствие",
+            "trigger": "приветствие",
+            "answer": f"Привет! Я Алиса! Это мой навык \"{skill.skill_name}\"",
+            "port": skill.port
+        })
 
         session.add(skill)
         session.commit()

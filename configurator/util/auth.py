@@ -11,10 +11,10 @@ from werkzeug.utils import redirect
 def login_required(fun):
     # Функция-обертка для проверки, вошел ли пользователь
 
-    def wrapper():
+    def wrapper(*args, **kwargs):
         if not current_user or not current_user.is_authenticated:
             return redirect('/login')
-        return fun()
+        return fun(*args, **kwargs)
 
     return wrapper
 

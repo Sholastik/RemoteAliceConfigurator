@@ -35,17 +35,19 @@ class CommandResource(Resource):
         command = session.query(Command).get(command_id)
         for token in ('action_name', 'trigger', 'answer'):
             if token in args and args[token] is not None:
-                exec(f"command.{token} = {args[token]}")
+                exec(f"command.{token} = '{args[token]}'")
         session.commit()
         return jsonify({'success': 'OK'})
 
 
-class CommandListResource(Resource):
+class CommandResourceMany(Resource):
     def get(self, port):
         session = db_session.create_session()
         commands = session.query(Command).filter(Command.port == port).all()
         return jsonify({"commands": [x.to_dict() for x in commands]})
 
+
+class CommandListResource(Resource):
     def post(self):
         args = command_parser.parse_args()
         session = db_session.create_session()
